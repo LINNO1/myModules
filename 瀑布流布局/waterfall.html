@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <meta charset="utf-8">
+  <title>瀑布流</title>
+  <style>
+  * {
+    box-sizing: border-box;
+  }
+
+   .ct {
+    /*width: 1200px;
+    margin: 0 auto;*/
+    position: relative;
+    transition: all 2s;
+   }
+
+   .ct .waterfallitem {
+    width: 200px;
+    margin: 10px;
+    background-color: green;
+   /* float: left;*/
+    position: absolute;
+   }
+
+   .ct .waterfallitem.h1 {
+    height: 180px;
+   }
+  
+   .ct .waterfallitem.h1 {
+    height: 140px;
+   }
+    .ct .waterfallitem.h2 {
+    height: 150px;
+   }
+    .ct .waterfallitem.h3 {
+    height: 220px;
+   }
+    .ct .waterfallitem.h4 {
+    height: 200px;
+   }
+    .ct .waterfallitem.h5 {
+    height: 190px;
+   }
+    .ct .waterfallitem.h6 {
+    height: 100px;
+   }
+  </style>
+</head>
+<body>
+ <div class="ct">
+   <div class="waterfallitem h1">1</div>
+   <div class="waterfallitem h2">2</div>
+   <div class="waterfallitem h3">3</div>
+   <div class="waterfallitem h4">4</div>
+   <div class="waterfallitem h5">5</div>
+   <div class="waterfallitem h1">6</div>
+   <div class="waterfallitem h6">7</div>
+   <div class="waterfallitem h3">8</div>
+   <div class="waterfallitem h2">9</div>
+   <div class="waterfallitem h5">10</div>
+   <div class="waterfallitem h1">11</div>
+   <div class="waterfallitem h1">12</div>
+   <div class="waterfallitem h3">13</div>
+   <div class="waterfallitem h4">14</div>
+   <div class="waterfallitem h5">15</div>
+   <div class="waterfallitem h1">16</div>
+   <div class="waterfallitem h2">17</div>
+   <div class="waterfallitem h2">18</div>
+   <div class="waterfallitem h4">19</div>
+   <div class="waterfallitem h3">20</div>
+   <div class="waterfallitem h1">1</div>
+   <div class="waterfallitem h2">2</div>
+   <div class="waterfallitem h3">3</div>
+   <div class="waterfallitem h4">4</div>
+   <div class="waterfallitem h5">5</div>
+   <div class="waterfallitem h1">6</div>
+   <div class="waterfallitem h6">7</div>
+   <div class="waterfallitem h3">8</div>
+   <div class="waterfallitem h2">9</div>
+   <div class="waterfallitem h5">10</div>
+   <div class="waterfallitem h1">11</div>
+   <div class="waterfallitem h1">12</div>
+   <div class="waterfallitem h3">13</div>
+   <div class="waterfallitem h4">14</div>
+   <div class="waterfallitem h5">15</div>
+   <div class="waterfallitem h1">16</div>
+   <div class="waterfallitem h2">17</div>
+   <div class="waterfallitem h2">18</div>
+   <div class="waterfallitem h4">19</div>
+   <div class="waterfallitem h3">20</div>
+ </div>
+<script type="text/javascript">
+  
+
+
+/*瀑布流的图片是高度不同，宽度一样*/
+/*思路： 由于图片宽度一样，则每行所存的图片数是一样的
+         用一组数组来存储不同列的高度，换行时，每次从剩余高度最多的排起*/
+
+
+  /*传入的参数是 容器的jquery对象*/
+ function Waterfull(ct){
+   
+  this.init(ct);
+  this.build();
+   
+
+
+   
+
+ }
+
+ Waterfull.prototype.init=function(ct){
+    this.$ct = ct;
+    this.$waterfallitem = $(this.$ct.find('.waterfallitem'));
+    this.waterfallitemWide = this.$waterfallitem.outerWidth(true);
+    var colLength = parseInt(this.$ct.width()/this.waterfallitemWide);
+    /*用来存放每列的叠加高度*/
+    this.col=[];
+    for(var i=0;i<colLength;i++){
+       this.col[i]=0;
+    }
+
+ }
+
+ Waterfull.prototype.build=function(){
+    var _this = this;
+    _this.$waterfallitem.each(function(){
+         var minIndex=_this.findMinIndex(_this.col);
+         var minValue= _this.col[minIndex];
+         $(this).css({
+           top: minValue,
+           left: _this.waterfallitemWide*minIndex
+         })
+         _this.col[minIndex]+=$(this).outerHeight(true);
+   })
+
+ }
+
+
+/*找叠加高度最小的*/
+Waterfull.prototype.findMinIndex=function(col){
+    var minVal = col[0];
+    var minInd =0;
+      for(let i=0;i<col.length;i++){
+        if(minVal>col[i]){
+          minVal=col[i];
+          minInd=i;
+        }
+      }
+      return minInd;
+
+ }
+  
+   new Waterfull($('.ct'));
+
+    /*当屏幕大小改变时，重新调整*/
+    $(window).resize(function(){
+        new Waterfull($('.ct'));
+    })
+
+</script>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>轮播</title>
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+		ul,li {
+			list-style: none;
+		}
+		a {
+			text-decoration: none;
+		}
+        .clearfix:after {
+        	content: '';
+        	display: block;
+        	clear: both;
+        }
+        .carousel {
+        	width: 800px;
+        	height: 600px; /*高度写死，否则无法撑开*/
+        	margin: 0 auto;
+        	overflow: hidden;
+        	position: relative;
+        }
+        .carousel .img-ct {
+            overflow: hidden;
+       	    position: absolute;  
+
+       	  	 
+      	  
+       }
+       .carousel .img-ct>li{       	 
+       	  float: left;
+
+       }
+       .carousel .img-ct>li img{
+       	  width: 800px;
+       	  height: 600px;     	
+       }
+       .carousel .arrow {
+       	  position: absolute;
+       	  width: 50px;
+       	  height: 50px;
+       	  line-height: 50px;
+       	  text-align: center;
+       	  border: 1px solid #ccc;
+       	  border-radius: 50%;
+       	  background: #fff;
+       	  opacity: 0.8;
+       	  font-size: 25px;
+       	  
+       }
+       .carousel .arrow:hover {
+       	 
+       	  opacity: 0.5;
+       	  
+       	  
+       }
+       .carousel .arrow.pre {
+       	   left: 10px;
+           top: 50%;
+           transform: translateY(-50%);
+       	   
+       }
+       .carousel .arrow.next {
+       	  right: 10px;
+       	  top: 50%;
+       	  transform: translateY(-50%);
+       }
+       .carousel .bullet {
+       	  position: absolute;
+       	  bottom: 10px;
+       	  left: 50%;
+       	  transform: translateX(-50%);
+          height: 10px;
+        
+
+       }
+       .carousel .bullet>li {
+       	 float: left;
+       	 width: 50px;
+       	 height: 10px;
+       	 border: 1px solid;
+       	 border-radius: 5px;
+       	 background: #fff;
+       	 cursor: pointer;
+       	 opacity: 0.7;
+       }
+       .carousel .bullet>li.active {
+       	 opacity: 1;
+       }
+      
+	</style>
+</head>
+
+<body>
+<div class="carousel">
+	<!-- <ul class='img-ct clearfix'>
+		<li><a href=""><img src="./src/img/carou1.jpg"></a></li>
+		<li><a href=""><img src="./src/img/carou2.jpg"></a></li>
+		<li><a href=""><img src="./src/img/carou3.jpg"></a></li>
+		<li><a href=""><img src="./src/img/carou4.jpg"></a></li>
+	</ul>
+	<a href="#" class="pre arrow"><</a>
+    <a href="#" class="next arrow">></a>
+    <ul class="bullet">
+    	<li class='active'></li>
+    	<li></li>
+    	<li></li>
+    	<li></li>
+    </ul>
+ -->
+</div>
+<div class="carousel">
+  <!-- <ul class='img-ct clearfix'>
+    <li><a href=""><img src="./src/img/carou1.jpg"></a></li>
+    <li><a href=""><img src="./src/img/carou2.jpg"></a></li>
+    <li><a href=""><img src="./src/img/carou3.jpg"></a></li>
+    <li><a href=""><img src="./src/img/carou4.jpg"></a></li>
+  </ul>
+  <a href="#" class="pre arrow"><</a>
+    <a href="#" class="next arrow">></a>
+    <ul class="bullet">
+      <li class='active'></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul> -->
+
+</div>
+
+
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="./myCarousel.js"></script>
+<script type="text/javascript">
+   
+   var imgUrlArr=[[
+   "./src/carou1.jpg",
+   "./src/carou2.jpg",
+   "./src/carou3.jpg",
+   "./src/carou4.jpg",
+   "./src/carou3.jpg",
+   "./src/carou4.jpg"
+   ],
+    
+  [ "./src/carou4.jpg",
+   "./src/carou2.jpg",
+   "./src/carou1.jpg",
+   "./src/carou3.jpg"
+   ]
+   ]
+  
+
+MyCarousel.start($('.carousel'),imgUrlArr)
+</script>
+</body>
+</html>

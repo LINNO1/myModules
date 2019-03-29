@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <meta charset="utf-8">
+  <title>照片墙</title>
+  <style>
+   * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+    ul,li {
+      list-style-type:none;
+     
+    }
+    a {
+      text-decoration: none;
+    }
+    .clearfix:after {
+      content: ' ';
+      display: block;
+      clear: both;
+    }
+   .ct-waterfall  {
+      width: 1200px;
+      margin: 0 auto;
+    }
+    /*.ct-waterfall {
+      width: 800px;
+      margin: 0 auto;
+    }*/
+    .ct-waterfall #pic-ct {
+      position: relative;  
+    }
+    .ct-waterfall .item{
+    position: absolute;
+    padding: 0 0 10px 0;
+    width: 280px;
+    margin: 10px;
+    border: 1px solid #DFDFDF;
+    background: #FFF;
+   /* opacity: 0;*/
+    transition: all .8s;
+    }
+    .ct-waterfall .item img{
+      width: 260px;
+      margin: 10px;    
+    
+    }
+    
+  #load{
+    visibility: hidden;
+    height: 20px;
+  }
+  .hide{
+    display: none;
+  }
+  
+  </style>
+</head>
+<body>
+ 
+    <div class="ct-waterfall">
+    
+   
+  </div>
+
+ <script type="text/javascript" src='waterfall_v3.js'> </script>
+</body>
+</html>

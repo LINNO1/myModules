@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>瀑布流布局--图片宽度相同</title>
+	<style type="text/css">
+	    * {
+	    	margin: 0;
+	    	padding: 0;
+	    	box-sizing: border-box;
+	    }
+	    ul, li {
+	    	list-style: none;
+	    }
+		.waterfull {
+			max-width: 1500px;
+			margin: 0 auto;
+
+
+		}
+		.img-ct {
+			width: 100%;
+			position: relative;
+
+			
+		}
+		.waterfull li {			
+			width: 220px;	
+			margin: 10px;		
+			position: absolute;
+			transition: all 1s;
+		}
+		
+		 .waterfull .hide-item, .showItem {
+			width: 240px;
+			height: 10px;
+			visibility: hidden;
+		}
+	</style>
+</head>
+<body>
+
+ <div class="ct">
+ 	
+ </div>
+  <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+ <script src='./waterfull_v4.js'></script>
+<script type="text/javascript">
+    var ww= new Waterfull($('.ct'))
+    
+         ww.getImag(10);
+
+ 	
+         
+</script>
+</body>
+</html>

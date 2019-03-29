@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <meta charset="utf-8">
+  <title>新闻页</title>
+  <style>
+   * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+    ul,li {
+      list-style-type:none;
+     
+    }
+    a {
+      text-decoration: none;
+    }
+    .clearfix:after {
+      content: ' ';
+      display: block;
+      clear: both;
+    }
+   .ct-waterfall  {
+      width: 1200px;
+      margin: 0 auto;
+    }
+    /*.ct-waterfall {
+      width: 800px;
+      margin: 0 auto;
+    }*/
+    .ct-waterfall #pic-ct {
+      position: relative;  
+    }
+    .ct-waterfall .item{
+    position: absolute;
+    padding: 0 0 10px 0;
+    width: 280px;
+    margin: 10px;
+    border: 1px solid #DFDFDF;
+    background: #FFF;
+   /* opacity: 0;*/
+    transition: all .8s;
+    }
+    .ct-waterfall .item a img{
+      width: 260px;
+      margin: 10px;    
+    
+    }
+    .ct-waterfall .item a h2{
+      font-size: 18px;
+      color: #333;
+       margin: 10px; 
+  
+    }
+    .ct-waterfall .item a p{
+      font-size: 14px;
+      color: #555;
+       margin: 10px; 
+    
+    }
+  #load{
+    visibility: hidden;
+    height: 20px;
+  }
+  .hide{
+    display: none;
+  }
+  
+  </style>
+</head>
+<body>
+ 
+    <div class="ct-waterfall">
+      <!-- <ul id="pic-ct" class="clearfix">
+         <li class="item">
+           <a href="#">
+                   <img src="http://inews.gtimg.com/newsapp_ls/0/531730377_150120/0">
+                    <h2>中国轰6K研发险些被俄罗斯发动机厂商卡脖子</h2>
+                    <p>近日，轰6K＂战神＂轰炸机首次公开亮相。在中国...</p>
+           </a>
+        </li>
+        <li class="item">
+           <a href="#">
+                   <img src="http://inews.gtimg.com/newsapp_ls/0/531730377_150120/0">
+                    <h2>中国轰6K研发险些被俄罗斯发动机厂商卡脖子111</h2>
+                    <p>近日，轰6K＂战神＂轰炸机首次公开亮相。在中国...</p>
+           </a>
+        </li>
+        <li class="item hide">我看不见，用于第一次计算高度</li>
+      </ul> 
+      <div id="load">我是看不见的，用来懒加载定位</div> -->
+   
+  </div>
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+ <script type="text/javascript" src='waterfall_v3.js'></script>
+ <!-- <script type="text/javascript">
+  var num=50;  //每次要多少数据
+  var curPage=1;  //当前页
+  var $load=$('#load');
+  var $item=$('.item');
+  var waterCol=[];
+  var itemWide=$item.outerWidth(true);  //计算隐藏的li的宽度
+  var itemLength = parseInt($('.ct-waterfall').width()/itemWide);
+  for(var i=0;i<itemLength;i++){
+    waterCol[i]=0;
+  }
+
+       
+
+    lazyLoad();
+    $(window).on('scroll',function(){
+       lazyLoad(); //懒加载
+    });
+
+
+
+
+   function lazyLoad(){
+    //console.log('111');
+      if(isShow($load)){  //如果滚到底部，则向后台要数据
+       // console.log('222');
+        getNews();
+      }
+   }
+
+   //判断该节点是否出现的屏幕上
+   function isShow(node){
+    var windowHeight = $(window).height();
+    var scrollTop = $(window).scrollTop();
+    var offsetTop = node.offset().top;
+    var nodeHeight= node.height();
+    console.log();
+     if(windowHeight+scrollTop > offsetTop && scrollTop<offsetTop+nodeHeight){
+      console.log('true');
+      return true;
+    }
+      return false;
+    }
+   
+
+//ajax 向后台发送参数
+    function getNews(){
+     // console.log('要数据、、、');
+       $.ajax({
+          //用到数据接口，注意参数不能错，否则没有数据回来
+          //jsonp 接口参数： http://platform.sina.com.cn/slide/album_tech?jsoncallback=func&app_key=1271687855&num=3&page=4
+          url: 'http://platform.sina.com.cn/slide/album_tech',
+          dataType: 'jsonp',
+          jsonp: "jsoncallback",
+          data: {
+            app_key: "1271687855",
+            num: num,
+            page:curPage
+          }
+        }).done(function(ret){   //要来的数据在ret之中，注意数据的格式
+          if(ret&&ret.status && ret.status.code==='0'){  //如果数据要来了
+            getData(ret.data); //取数据，其中ret.data存放的数据数组
+          }
+        });     
+    }
+
+  //瀑布流,要有一个数组来存放当前的高度,data是个数组
+ /* data:[
+  { id:  ,"sid": ,},
+  {},
+  {}
+
+  ]*/
+  //取出数据中需要的部分，以瀑布流的形式放在页面上
+    function getData(dataList){
+      //dataList是数组，news是数组中的每个元素
+      $.each(dataList,function(idx,news){
+         var $node = getNode(news);  //拼接成HTML，返回jquery对象
+         $node.find('img').load(function(){ //如果数据中的图片加载完毕，则放到页面上
+          $('#pic-ct').append($node);//则放到页面上
+          waterFallPlace($node); //瀑布流布局,用绝对定位
+          curPage++;
+
+         })
+        
+      })
+    }
+
+//  { id:  ,"sid": ,   }拼接HTML
+    function getNode(news){
+     var html= '<li class="item">';
+         html+='<a href="#">';
+         html+='<img src='+news.img_url+'>';
+         html+= '<h2>'+news.short_name+'</h2>'
+         html+= '<p>'+news.name+'</p>'
+         html+= '</a></li>'
+     return $(html);
+    }
+//瀑布流
+    function waterFallPlace($node){
+     var minIndex=0;
+     var minLength=waterCol[0];
+     for(let i=0;i<waterCol.length;i++){
+      if(minLength>waterCol[i]){
+        minIndex=i;
+        minLength=waterCol[i];
+      }
+     }
+    $node.css({
+      top: minLength,
+      left: minIndex*itemWide
+    });
+    waterCol[minIndex]+=$node.outerHeight(true);
+    $('#pic-ct').height(Math.max.apply(null,waterCol));
+
+    }
+ </script> -->
+</body>
+</html>

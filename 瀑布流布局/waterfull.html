@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>瀑布流布局--图片宽度相同</title>
+	<style type="text/css">
+	    * {
+	    	margin: 0;
+	    	padding: 0;
+	    	box-sizing: border-box;
+	    }
+	    ul, li {
+	    	list-style: none;
+	    }
+		.waterfull {
+			max-width: 1200px;
+			margin: 0 auto;
+
+
+		}
+		.img-ct {
+			width: 100%;
+			position: relative;
+			
+		}
+		.waterfull li {			
+			width: 240px;
+			height: 200px;
+			padding: 10px;	
+			border: 1px solid red;	
+			position: absolute;
+			transition: all 1s;
+		}
+		.waterfull .h1 {			
+			height: 300px;					
+		}
+		.waterfull .h2 {			
+			height: 250px;					
+		}
+		.waterfull .h3 {			
+			height: 400px;					
+		}
+	
+	</style>
+</head>
+<body>
+
+ <div class="waterfull ct">
+ 	<ul class='img-ct'>
+ 		<li class='h1 item'>1</li>
+ 		<li>2</li>
+ 		<li class='h1'>3</li>
+ 		<li>4</li>
+ 		<li class='h3'>5</li>
+ 		<li>6</li>
+ 		<li class='h1'>7</li>
+ 		<li>8</li>
+ 		<li class='h2'>9</li>
+ 		<li>10</li>
+ 		<li class='h3'>11</li>
+ 		<li>12</li>
+ 		<li class='h2'>13</li>
+ 		<li>14</li>
+ 		<li class='h1'>15</li>
+ 		<li>16</li>
+ 		<li class='h3'>17</li>
+ 		<li>18</li>
+ 		<li class='h2'>19</li>
+ 		<li>20</li>
+ 		<li class='h1'>21</li>
+ 		<li class='h1'>22</li>
+ 		
+ 	</ul>
+
+ </div>
+  <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+ <script type="text/javascript">
+ 	/*思路:瀑布流布局的图片宽度相同，高度不同
+ 	   1. 计算每一行能排多少个图片，用数组记下每一列图片的高度
+ 	   2. 排完一行之后，排下一行，从高度最小的那一列开始排
+
+ 	*/
+		waterfull();
+		$(window).resize(function(){
+				waterfull();
+		})
+ 	function waterfull(){
+ 		var $imgct= $('.waterfull .img-ct');
+ 	    var ctWidth = $imgct.width();
+ 		var itemWidth = $('.img-ct li').outerWidth(true);
+ 		var rowLength =parseInt(ctWidth/itemWidth);
+ 		var rowList=[];
+ 		for(var i=0;i<rowLength;i++){
+ 				rowList[i]=0;
+ 		}
+
+   		 
+   		$('.img-ct li').each(function(idx,ele){
+    	      var minLength = Math.min.apply(null,rowList);
+    		  var minIndex = rowList.indexOf(minLength);
+    		//this 为li 原生DOM
+    		  $(this).css({
+    				top: rowList[minIndex]+'px',
+    				left: itemWidth*minIndex+'px'
+
+    			})
+    	      rowList[minIndex]+=$(this).outerHeight(true);
+
+         })
+  } 	
+ 
+ </script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>木桶布局-图片高度相同，宽度不同</title>
+	<style type="text/css">
+   * {
+       margin:    0;
+       padding:   0;
+    
+   }
+ 
+    .barrel{
+      width: 1000px;
+      margin: 0 auto;
+    }
+
+    .img-ct {
+      margin-bottom: 8px;
+    }
+
+    .img-ct:after {
+      content: "";
+      display: block;
+      clear: both;
+    }
+
+    .img-box {
+      float: left;
+    }
+
+    .img-ct .img-box:first-child {
+      padding-left: 0;
+    }
+  .showItem {
+			width: 240px;
+			height: 10px;
+			
+		}
+		#btn-loadMore {
+            display: block;
+            width: 90px;
+            margin: 0 auto;
+            text-align: center;
+            padding:  8px 0; 
+            font-size: 16px;        
+            color: #e27272;
+            border: 1px solid #e27272;
+            border-radius: 2px;
+        }
+  </style>
+</head>
+<body>
+  <div class="ct">
+  	
+  	  	
+  </div>
+<!--   <a class="showItem">懒加载</a> -->
+<a href="javascript:void(0)" id='btn-loadMore' >加载更多</a>
+
+ <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+ <script src='./Barrel.js'></script>
+<script type="text/javascript">
+	
+  var bar=new Barrel($('.ct'),25,200)
+  bar.getImag(8);
+   $('#btn-loadMore').click(function(){
+         bar.getImag(5);
+  
+   })
+
+    
+          
+
+
+</script>
+
+
+
+
+
+</body>
+</html>
