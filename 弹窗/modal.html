@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>MODAL</title>
+  <style type="text/css">
+   * {
+       margin:    0;
+       padding:   0;
+    
+    }
+ 
+  /*弹窗样式*/
+  /*周围黑色透明的阴影*/
+  .dialog .dialog-overlay {
+     /*覆盖*/
+     width: 100%;
+     height: 100%;
+     /*黑色透明*/
+     opacity: 0.5;
+     background-color: #000;
+      /*绝对定位*/
+     position: absolute;
+     top: 0;
+     left: 0;
+     z-index: 1;
+  }
+   
+   .dialog .dialog-box {
+    width: 328px;
+    position: absolute;
+    left: 50%;
+    top: 30%;
+    margin-left: -164px; /*为宽度的一半，水平居中*/
+    font-size: 14px;
+    padding-bottom: 10px;
+    border-radius: 5px;
+    background-color: #eee;
+    z-index: 2;  /* z-index 的值要大于dialog-overlay的，否则会被覆盖*/
+
+   }
+   .dialog .dialog-header {
+    color: #fff;
+    background-color: #676666;
+    padding:  10px 19px;
+   }
+   .dialog .dialog-header h3 {
+     margin: 0;
+     font-size: 14px;
+   }
+   .dialog .dialog-header .btn-close {
+     position: absolute;
+     right: 10px;
+     top: 8px;
+     font-family: fantasy;
+     cursor: pointer;
+   }
+   .dialog .dialog-content {
+     padding: 10px;
+     margin: 13px;
+     color: #666;
+     font-size: 11px;
+   }
+   .dialog .dialog-footer {
+     text-align: center;
+   }
+   .dialog .dialog-footer .btn{
+    position: relative;
+    text-align: center;
+    display: inline-block;
+    width: 50px;
+    padding: 5px 0 6px;
+    margin: 2px;
+    color: #fff;
+    background-color:  #e33100;
+    text-decoration: none;
+    border-radius: 3px;
+
+   }
+   .dialog .dialog-footer .btn:hover{
+   background: #c33100;
+   }
+  </style>
+  
+</head>
+
+<body>
+  
+<button id="open1"> 打开1</button>
+<button id="open2"> 打开2</button>
+<button id="open3"> 打开3</button>
+<button id="open4"> 打开4</button>
+<button id="open5"> 打开5</button>
+<button id="close">关闭</button>
+<!-- 第一步：先把样式写好 -->
+<!-- div class="dialog">
+  <div class="dialog-overlay"></div>
+  <div class="dialog-box">
+    <div class="dialog-header">
+      <h3>hahaha</h3>
+      <span class="btn-close">x</span>
+    </div>
+    <div class="dialog-content">LLLL</div>
+    <div class="dialog-footer">
+      <a href="#" class="btn btn-close">取消</a>
+      <a href="#" class="btn btn-confirm">确定</a>
+    </div>
+  </div>
+</div> -->
+ <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src='./modal.js'></script>
+<script type="text/javascript">
+
+
+  
+
+/*---------------------创建示例-------------------------------------------*/
+  $('#open1').on('click',function(){
+    /*Dialog是个立即执行函数，已经执行了，返回的是Model函数*/
+    Dialog.open('hello, LLL');
+  })
+   $('#open2').on('click',function(){
+    /*Dialog是个立即执行函数，已经执行了，返回的是Model函数*/
+    Dialog.open('<a href="http://www.baidu.com">百度</a>');
+  })
+    $('#open3').on('click',function(){
+    /*Dialog是个立即执行函数，已经执行了，返回的是Model函数*/
+    Dialog.open({
+      title: 'LLL',
+      message: 'hello',
+      isShowCloseBtn: true,
+      isShowConfirmBtn: true,
+      onClose: function(){
+         alert('close')
+      },
+      onConfirm: function(){
+         alert('sure');
+    }
+    });
+  })
+
+    var tpl = '<ul><li>列表1</li><li>列表2</li><li>列表1</li><li>列表1</li></ul>';
+     $('#open4').on('click',function(){
+    /*Dialog是个立即执行函数，已经执行了，返回的是Model函数*/
+    Dialog.open({
+      title: 'welcome',
+      message: tpl,
+      isShowCloseBtn: true,
+      isShowConfirmBtn: true,
+      onClose: function(){
+         alert('close')
+       },
+      onConfirm: function(){
+      alert('sure');
+    }
+    });
+  })
+      $('#open5').on('click',function(){
+    /*Dialog是个立即执行函数，已经执行了，返回的是Model函数*/
+    Dialog.open({
+      title: 'Welcom~~~',
+      message: 'hello',
+      isShowCloseBtn: false,
+      isShowConfirmBtn: true
+    });
+
+    $('#close').on('click', function(){
+    Dialog.close();
+  });
+
+  })
+/*
+
+  var aa=$.extend({}, {qq: 1}, 'e:2,r:3');
+  aa=={0: "e", 1: ":", 2: "2", 3: ",", 4: "r", 5: ":", 6: "3", qq: 1}
+  var aa=$.extend({}, {qq: 1}, {e:2,r:3});
+  aa=={ qq: 1,e:2,r:3}
+     */
+</script>
+</body>
