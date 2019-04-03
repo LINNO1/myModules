@@ -28,6 +28,7 @@
      }
      Waterfull.prototype={
         init: function(){
+                 this.$bottom = this.$ct.find('#bottom');
                  this.$imgct=$(this.$ct.find('.img-ct'));            
                  this.itemWidth = $(this.$ct.find('.hide-item')).outerWidth(true); //用来计算高度
                  var ctWidth = this.$imgct.width();
@@ -42,8 +43,13 @@
         creatHtml: function(){
                  var html ='';
                  html += '<ul class="img-ct"><li class="hide-item">看不见,用来计算宽度</li></ul>';
+                 html +='</div><div id="bottom">bottom</div>'
                  this.$ct.addClass('waterfull');
                  this.$ct.append(html);
+                 this.$ct.find('#bottom')
+                     .css({ width: 10+'px',
+                            height: 10+'px',
+                            visibility: 'hidden'})
 
         },
         //向后台要图片
@@ -86,6 +92,7 @@
                _this.$imgct.height(Math.max.apply(null,_this.rowList));  //父容器的高度重新设置，不然高度为0，元素一直看得见
               }
          })
+                window.scrollTo(0,this.$bottom.offset().top);
 
      }
     

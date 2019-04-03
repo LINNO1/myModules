@@ -21,14 +21,16 @@
   */
 
 //三个参数 容器 每次加载图片的数目 基准高度
-function Barrel($barrel,imgnum,baseHeight){
-         this.$barrel=$barrel;
-         this.$barrel.addClass('barrel')
+function Barrel($ct,imgnum,baseHeight){
+         this.$ct=$ct;        
+         this.creatHtml();
          this.init(imgnum,baseHeight);
     }
 
 Barrel.prototype={
     init: function(imgnum,baseHeight){
+            this.$barrel = this.$ct.find('.barrel');
+            this.$bottom = this.$ct.find('#bottom');
             this.imgnum=25||imgnum;
             this.baseHeight=200||baseHeight;
             
@@ -37,8 +39,20 @@ Barrel.prototype={
             this.rowNodeArray=[];
             this.ctWidth=this.$barrel.width();
             this.isImagDone = true; //避免数据未到，用户多次点击
-
+            
+           
       },
+      //更新，添加一个标记，用于解决图片加载后，滚动条一直在最底部
+     creatHtml: function(){
+                 
+                 var html= '<div class="barrel"></div><div id="bottom">bottom</div>';
+                 this.$ct.append($(html));
+                 this.$ct.find('#bottom')
+                     .css({ width: 10+'px',
+                            height: 10+'px',
+                            visibility: 'hidden'})
+
+        },
 
     getImag: function(num){
         if(num){
@@ -91,6 +105,8 @@ Barrel.prototype={
                    $rowct.append($imgct);
            })
             this.$barrel.append($rowct);
+            //图片加载后，滚动条滚到底
+            window.scrollTo(0,this.$bottom.offset().top);
   }
 }
 
